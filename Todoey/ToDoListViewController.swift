@@ -11,6 +11,7 @@ import UIKit
 class ToDoListViewController: UITableViewController {
 
     var itemArray : [String] = ["Eating", "Coding", "Testing"]
+    var textField = UITextField()
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -44,5 +45,40 @@ class ToDoListViewController: UITableViewController {
             tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         }
     }
+    
+    
+    //MARK: -Add item
+    
+    @IBAction func addItemPressed(_ sender: UIBarButtonItem) {
+        
+        let alert = UIAlertController(title: "Add a new item", message: "", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
+            // what will happen when the user click add item in action alert
+            if let textField = self.textField.text {
+                self.itemArray.append(textField)
+            } else {
+                self.itemArray.append("Emtry")
+            }
+            
+            self.tableView.reloadData()
+            
+            
+        }
+        
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Create New Item"
+            
+            self.textField = alertTextField
+        }
+        
+        alert.addAction(action)
+        
+        present(alert, animated: true, completion: nil)
+        
+    }
+    
+    
+    
 }
 
